@@ -112,9 +112,52 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
                     if (text) {
                         layer.bindPopup( text );
                     }
+										layer.on({
+											mouseover: highlightFeature,
+											mouseout: resetHighlight,
+											click: redirectToRegion
+										});
                 }          
+								// control that shows state info on hover
+								var info = L.control();
+								info.onAdd = function (map) {
+									this._div = L.DomUtil.create('div', 'info');
+									this.update();
+									return this._div;
+								};
+								info.update = function (props) {
+									this._div.innerHTML = '<h4>Region und Pastor</h4>' +  (props ?
+										'<b>Region: ' + props.region + '</b><br />Pastor: ' + props.pastor : '');
+								};
+								info.addTo(previous_map);
+								// Highlighting
+								function highlightFeature(e) {
+									var layer = e.target;
+
+									layer.setStyle({
+										fillOpacity: 0.7
+									});
+
+									if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+										layer.bringToFront();
+									}
+
+									info.update(layer.feature.properties);
+								}
+
+								function resetHighlight(e) {
+									layer.resetStyle(e.target);
+									info.update();
+								}
+								function redirectToRegion(e) {
+									var subdomain = e.target.feature.properties.subdomain;
+									window.location.href = "https://" + subdomain + ".gospel-forum.de";
+								}
             });
         </script>
+				<style>
+.info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
+.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }</style>
         <?php
         return ob_get_clean();
 	}
