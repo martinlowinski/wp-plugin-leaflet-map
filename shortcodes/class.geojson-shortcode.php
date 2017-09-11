@@ -156,34 +156,6 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 								}
             });
         </script>
-				<style>
-				.leaflet-map .info {
-					padding: 6px 8px;
-					font-size: 14px/16px;
-					background: white;
-					background: rgba(255,255,255,0.8);
-					box-shadow: 0 0 15px rgba(0,0,0,0.2);
-					border-radius: 5px;
-				}
-
-				.leaflet-map .info h4 {
-					margin: 0 0 5px;
-				}
-
-				.leaflet-map .legend {
-					text-align: left;
-					line-height: 18px;
-					color: #555;
-				}
-
-				.leaflet-map .legend i {
-					width: 18px;
-					height: 18px;
-					float: left;
-					margin-right: 8px;
-					opacity: 0.7;
-				}
-				</style>
         <?php
         return ob_get_clean();
 	}
