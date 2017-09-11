@@ -127,8 +127,8 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 								};
 								info.update = function (props) {
 									this._div.innerHTML = '<h4>Region und Pastor</h4>'
-										+ '<b>Region: ' + (props ? props.region : '-') + '</b><br />'
-										+ 'Pastor: ' +  (props ? props.pastor : '-');
+										+ '<span class="region">Region: ' + (props ? props.region : '-') + '</span><br />'
+										+ '<span class="pastor">Pastor: ' +  (props ? props.pastor : '-') + '</span>';
 								};
 								info.addTo(previous_map);
 								// Highlighting
