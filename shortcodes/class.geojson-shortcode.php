@@ -64,6 +64,12 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 		ob_start();
 ?>
 		<script>
+		// Check for mouseover capabilities
+		window.USER_CAN_HOVER = false;
+		window.addEventListener('mouseover', function onFirstHover() {
+			window.USER_CAN_HOVER = true;
+			window.removeEventListener('mouseover', onFirstHover, false);
+		}, false);
 		WPLeafletMapPlugin.add(function () {
 			var previous_map = WPLeafletMapPlugin.getCurrentMap(),
 				src = '<?php echo $src; ?>',
@@ -115,7 +121,7 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 				layer.on({
 				mouseover: highlightFeature,
 					mouseout: resetHighlight,
-					click: redirectToRegion
+					click: (window.USER_CAN_HOVER ? redirectToRegion : highlightFeature)
 				});
 			}          
 			// control that shows state info on hover
@@ -127,7 +133,7 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 			};
 			info.update = function (props) {
 				this._div.innerHTML = '<h4>Region und Pastor</h4>'
-					+ '<span class="region">Region: ' + (props ? props.region : '-') + '</span><br />'
+					+ '<span class="region">Region: ' + (props ? '<a href="https://' + props.subdomain + '.gospel-forum.de">' + props.region + '</a>' : '-') + '</span><br />'
 					+ '<span class="pastor">Pastor: ' +  (props ? props.pastor : '-') + '</span>';
 			};
 			info.addTo(previous_map);
