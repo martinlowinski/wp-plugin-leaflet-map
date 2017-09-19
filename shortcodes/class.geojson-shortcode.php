@@ -133,15 +133,18 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 			info.addTo(previous_map);
 			// Highlighting
 			function clickFeature(e) {
-				if (e.originalEvent.sourceCapabilities.firesTouchEvents) {
+				if (hasTouchSupport()) {
 					resetHighlight(e);
 					highlightFeature(e);
 				} else {
 					redirectToRegion(e);
 				}
 			}
+			// Store the previous event from mouseover
+			var previousEvent;
 			function highlightFeature(e) {
 				var layer = e.target;
+				previousEvent = e;
 
 				layer.setStyle({
 					fillOpacity: 0.7
@@ -155,11 +158,21 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 			}
 			function resetHighlight(e) {
 				layer.resetStyle(e.target);
+				if (previousEvent) {
+					// Reset the style of the mouseover/tap event before
+					layer.resetStyle(previousEvent.target);
+				}
 				info.update();
 			}
 			function redirectToRegion(e) {
 				var subdomain = e.target.feature.properties.subdomain;
 				window.location.href = "https://" + subdomain + ".gospel-forum.de";
+			}
+			// From https://cdn.rawgit.com/hammerjs/touchemulator/master/tests/manual/leaflet.html
+			function hasTouchSupport() {
+				return ("ontouchstart" in window) || // touch events
+					(window.Modernizr && window.Modernizr.touch) || // modernizr
+					(navigator.msMaxTouchPoints || navigator.maxTouchPoints) > 2; // pointer events
 			}
 		});
 		</script>
