@@ -64,12 +64,6 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 		ob_start();
 ?>
 		<script>
-		// Check for mouseover capabilities
-		window.USER_CAN_HOVER = false;
-		window.addEventListener('mouseover', function onFirstHover() {
-			window.USER_CAN_HOVER = true;
-			window.removeEventListener('mouseover', onFirstHover, false);
-		}, false);
 		WPLeafletMapPlugin.add(function () {
 			var previous_map = WPLeafletMapPlugin.getCurrentMap(),
 				src = '<?php echo $src; ?>',
@@ -119,9 +113,9 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 					layer.bindPopup( text );
 				}
 				layer.on({
-				mouseover: highlightFeature,
+					mouseover: highlightFeature,
 					mouseout: resetHighlight,
-					click: (window.USER_CAN_HOVER ? redirectToRegion : highlightFeature)
+					click: clickFeature
 				});
 			}          
 			// control that shows state info on hover
@@ -138,11 +132,19 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 			};
 			info.addTo(previous_map);
 			// Highlighting
+			function clickFeature(e) {
+				if (e.originalEvent.sourceCapabilities.firesTouchEvents) {
+					resetHighlight(e);
+					highlightFeature(e);
+				} else {
+					redirectToRegion(e);
+				}
+			}
 			function highlightFeature(e) {
 				var layer = e.target;
 
 				layer.setStyle({
-				fillOpacity: 0.7
+					fillOpacity: 0.7
 				});
 
 				if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -151,7 +153,6 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 
 				info.update(layer.feature.properties);
 			}
-
 			function resetHighlight(e) {
 				layer.resetStyle(e.target);
 				info.update();
