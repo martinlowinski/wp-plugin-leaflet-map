@@ -61,6 +61,8 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 
 		$popup_text = trim($popup_text);
 
+		$settings = Leaflet_Map_Plugin_Settings::init();
+
 		ob_start();
 ?>
 		<script>
@@ -126,9 +128,7 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 				return this._div;
 			};
 			info.update = function (props) {
-				this._div.innerHTML = '<h4>Region und Pastor</h4>'
-					+ '<span class="region">Region: ' + (props ? '<a href="https://' + props.subdomain + '.gospel-forum.de">' + props.region + '</a>' : '-') + '</span><br />'
-					+ '<span class="pastor">Pastor: ' +  (props ? props.pastor : '-') + '</span>';
+				this._div.innerHTML = <?php echo $settings->get('default_infobox') ?>;
 			};
 			info.addTo(previous_map);
 			// Highlighting

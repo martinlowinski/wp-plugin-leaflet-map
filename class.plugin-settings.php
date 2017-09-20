@@ -135,6 +135,13 @@ class Leaflet_Map_Plugin_Settings {
                 'dawa' => 'Danmarks Adressers'
             ),
             'helptext' => 'Select the Geocoding provider to use to retrieve addresses defined in shortcode.'
+        ),
+        'default_infobox' => array(
+            'default' => "'<h4>Region und Pastor</h4>'
+		+ '<span class=\"region\">Region: ' + (props ? '<a href=\"https://' + props.subdomain + '.gospel-forum.de\">' + props.region + '</a>' : '-') + '</span><br />'
+		+ '<span class=\"pastor\">Pastor: ' +  (props ? props.pastor : '-') + '</span>'",
+            'type' => 'textarea',
+            'helptext' => 'Content of the Infobox. This is Javascript code that emits HTML. Available variables: props.subdomain, props.pastor, props.region'
         )
     );
 
