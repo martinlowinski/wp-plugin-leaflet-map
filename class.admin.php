@@ -59,6 +59,7 @@ class Leaflet_Map_Admin {
         add_menu_page("Leaflet Map", "Leaflet Map", 'manage_options', $main_link, array($this, "settings_page"), plugins_url('images/leaf.png', LEAFLET_MAP__PLUGIN_FILE));
         add_submenu_page("leaflet-map", "Default Values", "Default Values", 'manage_options', "leaflet-map", array($this, "settings_page"));
         add_submenu_page("leaflet-map", "Shortcode Helper", "Shortcode Helper", 'edit_posts', "leaflet-get-shortcode", array($this, "shortcode_page"));
+        add_submenu_page("leaflet-map", "GF Regions", "GF Regions", 'edit_posts', "gf-geojson", array($this, "geojson_page"));
     }
 
     /**
@@ -83,6 +84,17 @@ class Leaflet_Map_Admin {
         wp_enqueue_script('custom_plugin_js', plugins_url('scripts/get-shortcode.js', LEAFLET_MAP__PLUGIN_FILE), Array('leaflet_js'), false);
 
         include 'templates/shortcode-helper.php';
+    }
+
+    /**
+    * GeoJSON page to edit the GF regions
+    *
+    */
+    public function geojson_page () {
+        wp_enqueue_style( 'leaflet_admin_stylesheet' );
+        $settings = Leaflet_Map_Plugin_Geojson::init();
+        $plugin_data = get_plugin_data(LEAFLET_MAP__PLUGIN_FILE);
+        include 'templates/geojson.php';
     }
 
     /**

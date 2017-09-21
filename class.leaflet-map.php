@@ -97,6 +97,8 @@ class Leaflet_Map {
         include_once(LEAFLET_MAP__PLUGIN_DIR . 'class.plugin-settings.php');
         // Leaflet_Map_Admin
         include_once(LEAFLET_MAP__PLUGIN_DIR . 'class.admin.php');
+        // Leaflet_Map_Plugin_Geojson
+        include_once(LEAFLET_MAP__PLUGIN_DIR . 'class.plugin-geojson.php');
     }
 
     /**
@@ -185,6 +187,8 @@ class Leaflet_Map {
 
         /* run a construct function in the document head for subsequent functions to use (it is lightweight) */
         wp_enqueue_script('leaflet_map_construct', plugins_url('scripts/construct-leaflet-map.js', __FILE__), Array(), self::$version, false);
+
+        wp_enqueue_script('mapshaper', plugins_url('scripts/mapshaper-lib.js', __FILE__), Array('jquery'), self::$version, false);
     }
 
     /**
