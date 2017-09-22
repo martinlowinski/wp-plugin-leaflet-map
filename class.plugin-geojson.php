@@ -1,11 +1,8 @@
 <?php
 /**
 * 
-* Used to get and set values
+* Used to generate GeoJSON data
 * 
-* Features:
-* * Add prefixes to db options
-* * built-in admin settings page method
 * 
 */
 
@@ -31,6 +28,11 @@ class Leaflet_Map_Plugin_Geojson {
 	* @var array $options
 	*/
         public $options = array(
+        'csv_file' => array(
+            'default' => "",
+            'type' => 'file',
+            'helptext' => 'CSV data to generate the regions. Generated data is shown in the following textarea.'
+        ),
         'geojson_data' => array(
             'default' => "",
             'type' => 'textarea',

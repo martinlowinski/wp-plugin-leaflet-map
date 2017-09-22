@@ -92,6 +92,9 @@ class Leaflet_Map_Admin {
     */
     public function geojson_page () {
         wp_enqueue_style('leaflet_admin_stylesheet');
+        wp_enqueue_script('mapshaper', plugins_url('scripts/mapshaper-lib.js', LEAFLET_MAP__PLUGIN_FILE), Array('jquery'), false);
+        wp_enqueue_script('mapshaper_regions', plugins_url('scripts/mapshaper-regions.js', LEAFLET_MAP__PLUGIN_FILE), Array('mapshaper'), false);
+
         $settings = Leaflet_Map_Plugin_Geojson::init();
         $plugin_data = get_plugin_data(LEAFLET_MAP__PLUGIN_FILE);
         include 'templates/geojson.php';

@@ -86,6 +86,17 @@ class Leaflet_Map_Plugin_Option {
 				<?php
 				break;
 
+			case 'file':
+				?>
+		<input
+			class="full-width"
+			name="<?php echo $name; ?>"
+			type="file"
+			id="<?php echo $name; ?>"
+			value="<?php echo htmlspecialchars( $value ); ?>"
+			/>
+				<?php
+				break;
 			case 'checkbox':
 			?>
 
