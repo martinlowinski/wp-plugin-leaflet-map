@@ -91,7 +91,7 @@ class Leaflet_Map_Admin {
     *
     */
     public function geojson_page () {
-        wp_enqueue_style( 'leaflet_admin_stylesheet' );
+        wp_enqueue_style('leaflet_admin_stylesheet');
         $settings = Leaflet_Map_Plugin_Geojson::init();
         $plugin_data = get_plugin_data(LEAFLET_MAP__PLUGIN_FILE);
         include 'templates/geojson.php';

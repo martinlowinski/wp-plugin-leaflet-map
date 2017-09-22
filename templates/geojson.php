@@ -83,10 +83,9 @@ if (isset($_POST['submit'])) {
 	</div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 
-$('#generate').click(function(e) {
+jQuery('#generate').click(function(e) {
 	generate();
 });
 
@@ -102,7 +101,7 @@ var mapshaper = require('mapshaper');
 function generate(csv) {
 	var json = (function () {
 		var json = null;
-		$.ajax({
+		jQuery.ajax({
 		'async': false,
 			'global': false,
 			'url': '<?php echo plugin_dir_url( __FILE__ ); ?>' + '../postleitzahlen-gf.geojson',
@@ -128,7 +127,7 @@ function generate(csv) {
 			console.log(err);
 			console.log(output);
 			var data = jQuery.parseJSON(output['postleitzahlen-gf.json'].toString());
-			$('#geojson_data').val(output['postleitzahlen-gf.json'].toString());
+			jQuery('#geojson_data').val(output['postleitzahlen-gf.json'].toString());
 			console.log(data);
 		});
 
