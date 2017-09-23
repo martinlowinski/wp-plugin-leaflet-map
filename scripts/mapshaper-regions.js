@@ -23,7 +23,7 @@ function generate(csv) {
 	// - Filter: Remove regions that are ungrouped
 	// - Simplify: Reduce the dataset
 	mapshaper.applyCommands(
-		'postleitzahlen-gf.json -join postleitzahlen-gf.csv keys=postcode,postcode -dissolve2 region -filter-slivers copy-fields=postcode,locality,pastor,subdomain,color,fillColor,fillOpacity,weight -filter \'region != null\' -simplify 15% -o format=geojson',
+		'postleitzahlen-gf.json -join postleitzahlen-gf.csv keys=postcode,postcode -dissolve2 region copy-fields=postcode,locality,pastor,subdomain,color,fillColor,fillOpacity,weight -filter-slivers -filter \'region != null\' -simplify 15% -o format=geojson',
 		input,
 		function(err, output) {
 			var data = output['postleitzahlen-gf.json'].toString();
