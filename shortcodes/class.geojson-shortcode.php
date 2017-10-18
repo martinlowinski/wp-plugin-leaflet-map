@@ -46,6 +46,11 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 		$src = empty($src) ? $class::$default_src : $src;
 		$src = empty($source) ? $src : $source;
 
+		$src_path = LEAFLET_MAP__PLUGIN_DIR . $src;
+		$src_url = plugins_url($src, LEAFLET_MAP__PLUGIN_FILE);
+
+		$src_mtime = date ("U", filemtime($src_path));
+
 		$style_json = $this->LM->get_style_json( $atts );
 
 		$fitbounds = empty($fitbounds) ? 0 : $fitbounds;
@@ -68,7 +73,7 @@ class Leaflet_Geojson_Shortcode extends Leaflet_Shortcode {
 		<script>
 		WPLeafletMapPlugin.add(function () {
 			var previous_map = WPLeafletMapPlugin.getCurrentMap(),
-				src = '<?php echo $src; ?>',
+				src = '<?php echo $src_url . "?_=" . $src_mtime; ?>',
 				default_style = <?php echo $style_json; ?>,
 				rewrite_keys = {
 				fill : 'fillColor',
