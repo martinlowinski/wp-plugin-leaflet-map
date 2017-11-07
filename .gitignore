@@ -1,0 +1,5 @@
+assets/
+svn/
+regions*.js
+.DS_Store
+*.swp
